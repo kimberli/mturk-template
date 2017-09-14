@@ -2,7 +2,7 @@
     "meta": {
         "title": "Experiment Title",
         "description": "desc",
-        "numTasks": 10,
+        "numSubtasks": 10,
         "disclaimer": "This is a disclaimer, you are participating in this experiment voluntarily"
     },
     "instructions": {
@@ -13,6 +13,17 @@
             "instruction3"
         ],
         "images": []
+    },
+    "hitCreation": {
+        "title": "HIT Title",
+        "description": "HIT description",
+        "numTasks": 5,
+        "numAssignments": 100,
+        "rewardAmount": "0.00",
+        "keywords": "these are your HIT tags",
+        "duration": 1200,
+        "lifetime": 86400,
+        "taskUrl": "your task URL goes here"
     },
     "submitUrl": "https://workersandbox.mturk.com/mturk/externalSubmit"
 }

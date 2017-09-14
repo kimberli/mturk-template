@@ -17,7 +17,7 @@ function saveTaskData() {
 function updateTask() {
     custom.showTask(state.taskInputs[state.taskIndex], state.taskOutputs[state.taskIndex]);
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
-    if (state.taskIndex == config.meta.numTasks - 1) {
+    if (state.taskIndex == config.meta.numSubtasks - 1) {
         $("#next-button").addClass("disabled");
         $("#prev-button").removeClass("disabled");
         $("#submit-button").removeClass("disabled");
@@ -36,7 +36,7 @@ function updateTask() {
 }
 
 function nextTask() {
-    if (state.taskIndex < config.meta.numTasks - 1) {
+    if (state.taskIndex < config.meta.numSubtasks - 1) {
         saveTaskData();
         if (custom.validateTask(state.taskOutputs[state.taskIndex])) {
             state.taskIndex++;
@@ -91,7 +91,7 @@ function submitHIT() {
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
     console.log("submitting hit");
-    for (var i = 0; i < config.meta.numTasks; i++) {
+    for (var i = 0; i < config.meta.numSubtasks; i++) {
         var item = state.taskOutputs[i];
         if (!custom.validateTask(item)) {
             $("#submit-button").removeClass("loading");
@@ -140,7 +140,7 @@ function populateMetadata(config) {
 
     }
     $("#progress-bar").progress({
-        total: config.meta.numTasks,
+        total: config.meta.numSubtasks,
     });
 }
 
