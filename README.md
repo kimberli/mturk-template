@@ -1,22 +1,16 @@
-# Icon Identification interface
-A static HTML page for an icon image selection task.
+# Generalized MTurk Task Template
+A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
 Run `make watch` to watch SCSS files and compile to CSS. Run something like `python -m SimpleHTTPServer` to see the page locally.
 
 ### Customization
-Change the data in `assets/data` and run helper scripts `cpimg.sh` and `split.sh` as needed.
+This framework can be used to create MTurk HITs, broken up into discrete repeated "tasks". 
 
-Update constants in `assets/js/script.js` and change the `index.html` file accordingly.
+To define your own MTurk HIT, you only need to change things in three places:
+* `config.json` - here, you can define your HIT's name, description, number of tasks, instructions, etc.
+* `index.html` - find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see next bullet).
+* `assets/js/custom.js` - fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data frmo a task, and validating a task.
 
 ### Setting up the MTurk task
 Use `script/create_hit.rb` to create a HIT.
-
-### Partitioning the dataset
-Run the helper script `split.sh`. Currently, the entire test dataset is in `assets/data/all_test.txt`, and the dataset to be split (minus the 330 original transcripted images) is in `new_data.txt`. To get 13 partitions, I ran `split.sh` with parameter 200 images per split. The partitioned files are `new_data_<x>.txt`, where `x` is the index in the URL parameter `task_index` (and the global variable `TASK_INDEX` in `assets/js/script.js`). Note that these task indices are 1-indexed (see `script/createhit.rb`).
-
-If you have a different number of images/partitions, you need to update the constants in the following files: (say `n` is your target number of partitions)
-
-* running `split.sh` - first parameter should be target number of images per partition (should create `n` new files)
-* `assets/js/script.js` - NUM_PARTITIONS (should be `n`)
-* `script/create_hit.rb` - NUM_TASKS (should be `n`)
