@@ -2,8 +2,8 @@ var config = {};
 
 var state = {
     taskIndex: 0,
-    taskInputData: [],
-    taskOutputData: [],
+    taskInputs: [],
+    taskOutputs: [],
     assignmentId: gup("assignmentId"),
     workerId: gup("workerId"),
 };
@@ -11,11 +11,11 @@ var state = {
 /* HELPERS */
 function saveTaskData() {
     console.log("saving task data: " + custom.collectData());
-    state.taskOutputData[state.taskIndex] = custom.collectData();
+    state.taskOutputs[state.taskIndex] = custom.collectData();
 }
 
 function updateTask() {
-    custom.showTask(state.taskInputData[state.taskIndex], state.taskOutputData[state.taskIndex]);
+    custom.showTask(state.taskInputs[state.taskIndex], state.taskOutputs[state.taskIndex]);
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
     if (state.taskIndex == config.meta.numTasks - 1) {
         $("#next-button").addClass("disabled");
@@ -38,7 +38,7 @@ function updateTask() {
 function nextTask() {
     if (state.taskIndex < config.meta.numTasks - 1) {
         saveTaskData();
-        if (custom.validateTask(state.taskOutputData[state.taskIndex])) {
+        if (custom.validateTask(state.taskOutputs[state.taskIndex])) {
             state.taskIndex++;
             updateTask();
             clearMessage();
@@ -92,7 +92,7 @@ function submitHIT() {
     var form = $("#submit-form");
     console.log("submitting hit");
     for (var i = 0; i < config.meta.numTasks; i++) {
-        var item = state.taskOutputData[i];
+        var item = state.taskOutputs[i];
         if (!custom.validateTask(item)) {
             $("#submit-button").removeClass("loading");
             generateMessage("negative", "Please complete the task!", "Some tasks aren't correctly completed yet.");
@@ -149,8 +149,8 @@ function setupButtons() {
 
 /* MAIN */
 $(document).ready(function() {
-    custom.loadTasks().done(function(taskInputData) {
-        state.taskInputData = taskInputData;
+    custom.loadTasks().done(function(taskInputs) {
+        state.taskInputs = taskInputs;
         $.getJSON("config.json").done(function(data) {
             config = data;
             populateMetadata(config);

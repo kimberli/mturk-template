@@ -9,18 +9,18 @@ var custom = {
             return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         });
     },
-    showTask: function(taskInputData, taskOutputData) {
+    showTask: function(taskInput, taskOutput) {
         /*
          * This function is called when the experiment view is unhidden 
          * or when the task index is changed
          *
-         * taskInputData - the object in the result from loadTasks corresponding 
+         * taskInput - the object in the result from loadTasks corresponding to
          *   the current task
-         * taskOutputData - the object in the results array corresponding to the 
+         * taskOutput - the object in the results array corresponding to the
          *   current task (i.e. a partially filled out task)
          */
-        $(".exp-data").html(taskInputData);
-        $("#exp-input").val(taskOutputData);
+        $(".exp-data").html(taskInput);
+        $("#exp-input").val(taskOutput);
         $("#exp-input").focus();
     },
     collectData: function() {
@@ -30,14 +30,14 @@ var custom = {
          */
         return $("#exp-input").val();
     },
-    validateTask: function(taskOutputData) {
+    validateTask: function(taskOutput) {
         /*
          * This function should return true or false depending on whether the 
          * input task is valid (e.g. fully filled out)
          *
-         * taskOutputData - the object in the results array to validate
+         * taskOutput - the object in the results array to validate
          */
-        var matches = taskOutputData.match(/\d+/g);
+        var matches = taskOutput.match(/\d+/g);
         if (matches != null) {
             return false;
         }
