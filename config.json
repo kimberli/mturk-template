@@ -1,0 +1,18 @@
+{
+    "meta": {
+        "title": "Experiment Title",
+        "description": "desc",
+        "numTasks": 10,
+        "disclaimer": "This is a disclaimer, you are participating in this experiment voluntarily"
+    },
+    "instructions": {
+        "simple": "this is simple instructions for <b>4</b> tasks",
+        "steps": [
+            "instruction1",
+            "instruction2",
+            "instruction3"
+        ],
+        "images": []
+    },
+    "submitUrl": "https://workersandbox.mturk.com/mturk/externalSubmit"
+}

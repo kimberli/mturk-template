@@ -1,0 +1,32 @@
+html, body {
+    height: initial;
+}
+
+#page-title {
+    margin-top: 10px;
+}
+
+#sample-task {
+    display: none;
+}
+
+#instructions-demo {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.instructions-img {
+    width: 100%;
+}
+
+#experiment {
+    display: none;
+}
+
+#disclaimer-box {
+    color: #444;
+}
+
+.ui.label {
+    margin-bottom: 5px;
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>test</title>
+    <meta name="description" content="mturk task template">
+    <meta name="author" content="kimberli">
+    
+    <link rel="stylesheet" href="assets/lib/semantic/semantic.min.css">
+    <link rel="stylesheet" href="assets/css/overrides.css">
+    <script src="assets/lib/jquery/jquery-3.1.1.min.js"></script>
+    <script src="assets/lib/semantic/semantic.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+
+<body>
+<div class="ui container">
+    <h1 id="page-title" class="meta-title ui centered dividing header"></h1>
+    <div id="instructions" class="ui top aligned centered grid">
+        <div class="row">
+            <div class="left aligned fourteen wide column">
+                <h2>Instructions</h2>
+                <p><b class="meta-desc"></b></p>
+                <p class="instructions-simple"></p>
+                <h3>Guidelines:</h3>
+                <ol class="instructions-steps">
+                </ol>
+                <div id="sample-task">
+                    <h3>Sample task:</h3>
+                    <div id="instructions-demo"></div>
+                </div>
+                <div class="ui primary button right floated instruction-button">Continue</div>
+            </div>
+        </div>
+    </div>
+    <div id="experiment" class="ui top aligned centered grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <div id="progress-bar" class="ui small olive progress">
+                    <div class="bar"></div>
+                    <div class="label"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->
+            <h4 class="task-instructions">Input data for task <b><span class="exp-data"></span></b></h4>
+            <div class="right aligned twelve wide column" id="exp">
+                <input id="exp-input">
+            </div>
+            <!-- ^^ CUSTOM EXPERIMENT MARKUP GOES HERE ^^ -->
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <div id="button-row" class="field">
+                    <div id="next-button" class="ui primary right floated button">Next</div>
+                    <div id="prev-button" class="ui primary right floated button">Prev</div>
+                    <div class="ui button right floated instruction-button">Show instructions</div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom aligned row">
+            <div class="eight wide column">
+                <div id="message-field" class="field">
+                </div>
+            </div>
+            <div class="right aligned eight wide column">
+                <div id="final-task-fields" class="ui form">
+                    <div id="feedback-field" class="field">
+                        <label>
+                            Any comments or feedback?
+                        </label>
+                        <textarea id="feedback-input" rows="2"></textarea>
+                    </div>
+                    <div class="field">
+                        <div id="submit-button" class="ui green right floated button">Submit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="row">
+            <div id="disclaimer-box" class="center aligned fourteen wide column">
+                <p class="disclaimer"></p>
+            </div>
+        </div>
+        <div class="row">
+            <form id="submit-form" name="submit-form">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
