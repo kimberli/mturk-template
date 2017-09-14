@@ -14,3 +14,7 @@ To define your own MTurk HIT, you only need to change things in three places:
 
 ### Setting up the MTurk task
 Use `script/create_hit.rb` to create a HIT.
+
+### Screenshots
+Here's a demo of the task interface:
+![demo](demo.gif)
