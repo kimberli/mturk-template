@@ -107,8 +107,10 @@ function submitHIT() {
     form.append($("<input type='hidden' name='feedback' value='" + $("#feedback-input").val() + "'>"));
     $("#submit-form").attr("action", config.submitUrl); 
     $("#submit-form").attr("method", "POST"); 
-    // $("#submit-form").submit();
+    $("#submit-form").submit();
     $("#submit-button").removeClass("loading");
+    generateMessage("positive", "Success!", "Thanks for helping us out with this task!");
+    $("#submit-button").addClass("disabled");
 }
 
 function gup(name) {
