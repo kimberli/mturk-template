@@ -156,10 +156,10 @@ function setupButtons() {
 
 /* MAIN */
 $(document).ready(function() {
-    custom.loadTasks().done(function(taskInputs) {
-        state.taskInputs = taskInputs;
-        $.getJSON("config.json").done(function(data) {
-            config = data;
+    $.getJSON("config.json").done(function(data) {
+        config = data;
+        custom.loadTasks(config.meta.numSubtasks).done(function(taskInputs) {
+            state.taskInputs = taskInputs;
             populateMetadata(config);
             setupButtons(config);
         });

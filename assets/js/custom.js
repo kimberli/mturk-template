@@ -1,9 +1,11 @@
 var custom = {
-    loadTasks: function() {
+    loadTasks: function(numSubtasks) {
         /*
          * This function is called on page load and should implement the promise interface
          * The final data returned should be an array of objects with length 
          * config.meta.numTasks, one object for each task
+         *
+         * numSubtasks - int indicating what length array to return (how many subtasks this task should have)
          */
         return $.get("").then(function() {
             return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
