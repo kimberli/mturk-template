@@ -10,7 +10,6 @@ var state = {
 
 /* HELPERS */
 function saveTaskData() {
-    console.log("saving task data: " + custom.collectData());
     state.taskOutputs[state.taskIndex] = custom.collectData();
 }
 
