@@ -42,7 +42,7 @@ function nextTask() {
             updateTask();
             clearMessage();
         } else {
-            generateMessage("negative", "Please complete the current task!", "Your task data is invalid.");
+            generateMessage("negative", "Please complete the current task!");
         }
     }
 }
@@ -70,12 +70,11 @@ function clearMessage() {
     $("#message-field").html("");
 }
 
-function generateMessage(cls, header, body) {
+function generateMessage(cls, header) {
     clearMessage();
     var messageStr = "<div class='ui message " + cls + "'>";
     messageStr += "<i class='close icon'></i>";
-    messageStr += "<div class='header'>" + header + "</div>";
-    messageStr += "<p>" + body + "</p></div>";
+    messageStr += "<div class='header'>" + header + "</div></div>";
 
     var newMessage = $(messageStr);
     $("#message-field").append(newMessage);
@@ -94,7 +93,7 @@ function submitHIT() {
         var item = state.taskOutputs[i];
         if (!custom.validateTask(item)) {
             $("#submit-button").removeClass("loading");
-            generateMessage("negative", "Please complete the task!", "Some tasks aren't correctly completed yet.");
+            generateMessage("negative", "Please complete the task!");
             return;
         }
     }
@@ -108,7 +107,7 @@ function submitHIT() {
     $("#submit-form").attr("method", "POST"); 
     $("#submit-form").submit();
     $("#submit-button").removeClass("loading");
-    generateMessage("positive", "Success!", "Thanks for helping us out with this task!");
+    generateMessage("positive", "Thanks! Your task was submitted successfully.");
     $("#submit-button").addClass("disabled");
 }
 
