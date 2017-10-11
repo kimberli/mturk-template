@@ -18,7 +18,11 @@ function updateTask() {
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
     if (state.taskIndex == config.meta.numSubtasks - 1) {
         $("#next-button").addClass("disabled");
-        $("#prev-button").removeClass("disabled");
+        if (state.taskIndex != 0) {
+            $("#prev-button").removeClass("disabled");
+        } else {
+            $("#prev-button").addClass("disabled");
+        }
         $("#submit-button").removeClass("disabled");
         $("#final-task-fields").css("display", "block");
     } else if (state.taskIndex == 0) {
@@ -61,6 +65,7 @@ function toggleInstructions() {
         $("#instructions").css("display", "none");
         updateTask();
     } else {
+        saveTaskData();
         $("#experiment").css("display", "none");
         $("#instructions").css("display", "flex");
     }
