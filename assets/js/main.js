@@ -1,8 +1,11 @@
+const MTURK_SUBMIT = "https://www.mturk.com/mturk/externalSubmit";
+const SANDBOX_SUBMIT = "https://workersandbox.mturk.com/mturk/externalSubmit";
+
 var config = {};
 
 var state = {
     taskIndex: 0,
-    taskInputs: [],
+    taskInputs: {}, 
     taskOutputs: [],
     assignmentId: gup("assignmentId"),
     workerId: gup("workerId"),
@@ -10,12 +13,24 @@ var state = {
 
 /* HELPERS */
 function saveTaskData() {
-    var index = state.taskIndex;
-    state.taskOutputs[index] = custom.collectData(state.taskInputs[index]);
+    if (config.meta.aggregate) {
+        var updates = custom.collectData(state.taskIndex, getTaskInputs(state.taskIndex));
+        $.extend(state.taskOutputs, updates);
+    } else {
+        state.taskOutputs[state.taskIndex] = custom.collectData(state.taskIndex, getTaskInputs(state.taskIndex));
+    }
+}
+
+function getTaskInputs(i) {
+    return config.meta.aggregate ? state.taskInputs : state.taskInputs[i];
+}
+
+function getTaskOutputs(i) {
+    return config.meta.aggregate ? state.taskOutputs : state.taskOutputs[i];
 }
 
 function updateTask() {
-    custom.showTask(state.taskInputs[state.taskIndex], state.taskOutputs[state.taskIndex]);
+    custom.showTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
     if (state.taskIndex == config.meta.numSubtasks - 1) {
         $("#next-button").addClass("disabled");
@@ -42,10 +57,11 @@ function updateTask() {
 function nextTask() {
     if (state.taskIndex < config.meta.numSubtasks - 1) {
         saveTaskData();
-        if (custom.validateTask(state.taskOutputs[state.taskIndex])) {
+        if (custom.validateTask(getTaskOutputs(state.taskIndex), state.taskIndex)) {
             state.taskIndex++;
             updateTask();
             clearMessage();
+            console.log("Current collected data", state.taskOutputs);
         } else {
             generateMessage("negative", "Please complete the current task!");
         }
@@ -89,27 +105,39 @@ function generateMessage(cls, header) {
     });
 }
 
+function addHiddenField(form, name, value) {
+    // form is a jQuery object, name and value are strings
+    var input = $("<input type='hidden' name='" + name + "' value=''>");
+    input.val(value);
+    form.append(input);
+}
+
 function submitHIT() {
+    var submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
     saveTaskData();
     clearMessage();
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
     console.log("submitting hit");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
-        var item = state.taskOutputs[i];
-        if (!custom.validateTask(item)) {
+        var item = getTaskOutputs(i);
+        if (!custom.validateTask(item, i)) {
             $("#submit-button").removeClass("loading");
             generateMessage("negative", "Please complete the task!");
             return;
         }
     }
-    for (var key in state) {
-        var val = "<input type='hidden' name='" + key + "' value='";
-        val += JSON.stringify(state[key]) + "'>";
-        form.append($(val));
+
+    addHiddenField(form, 'assignmentId', state.assignmentId);
+    addHiddenField(form, 'workerId', state.workerId);
+    var results = {
+        'inputs': state.taskInputs,
+        'outputs': state.taskOutputs
     }
-    form.append($("<input type='hidden' name='feedback' value='" + $("#feedback-input").val() + "'>"));
-    $("#submit-form").attr("action", config.submitUrl); 
+    addHiddenField(form, 'results', JSON.stringify(results));
+    addHiddenField(form, 'feedback', $("#feedback-input").val());
+
+    $("#submit-form").attr("action", submitUrl); 
     $("#submit-form").attr("method", "POST"); 
     $("#submit-form").submit();
     $("#submit-button").removeClass("loading");
@@ -162,6 +190,9 @@ function setupButtons() {
 $(document).ready(function() {
     $.getJSON("config.json").done(function(data) {
         config = data;
+        if (config.meta.aggregate) {
+            state.taskOutputs = {};
+        }
         custom.loadTasks(config.meta.numSubtasks).done(function(taskInputs) {
             state.taskInputs = taskInputs;
             populateMetadata(config);

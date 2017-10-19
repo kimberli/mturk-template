@@ -2,8 +2,8 @@ var custom = {
     loadTasks: function(numSubtasks) {
         /*
          * This function is called on page load and should implement the promise interface
-         * The final data returned should be an array of objects with length 
-         * config.meta.numTasks, one object for each task
+         * If aggregate is set to false, the final data returned should be an array of objects 
+         * with length config.meta.numTasks, one object for each task. 
          *
          * numSubtasks - int indicating what length array to return (how many subtasks this task should have)
          */
@@ -11,41 +11,56 @@ var custom = {
             return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         });
     },
-    showTask: function(taskInput, taskOutput) {
+    showTask: function(taskInput, taskIndex, taskOutput) {
         /*
          * This function is called when the experiment view is unhidden 
          * or when the task index is changed
          *
-         * taskInput - the object in the result from loadTasks corresponding to
-         *   the current task
-         * taskOutput - the object in the results array corresponding to the
-         *   current task (i.e. a partially filled out task)
+         * taskInput - If aggregate is false, the object in the array from loadTasks
+         *   corresponding to subtask taskIndex. Else, the input object from loadTasks.
+         * taskIndex - the index of the current subtask 
+         * taskOutput - A partially filled out task corresponding to the subtask 
+         *   taskIndex. If aggregate is set to false, this is the object in the results
+         *   array corresponding to the current task. If aggregate is set to true, this 
+         *   is the results object as collected so far. 
          */
-        $(".exp-data").html(taskInput);
-        $("#exp-input").val(taskOutput);
+        $(".exp-data").html(taskInput.toString());
+        if (taskOutput) {
+            $("#exp-input").val(taskOutput['results_' + taskIndex]);
+        } else {
+            $("#exp-input").val("");
+        }
         $("#exp-input").focus();
     },
-    collectData: function(taskInput) {
+    collectData: function(taskIndex, taskInputs) {
         /* 
          * This function should return the experiment data for the current task 
-         * as an object
+         * as an object. 
+         * If aggregate is set to false, this data will be stored as the output
+         * in the results array for this task. 
+         * If aggregate is set to true, this object will be merged with the 
+         * existing results object. 
          *
-         * taskInput - the object in the result from loadTasks corresponding to
-         *   the current task
+         * taskIndex - the index of the current subtask
+         * taskInputs - If aggregate is false, the object in the array from loadTasks
+         *   corresponding to subtask taskIndex. Else, the input object from loadTasks.
          */
-        return $("#exp-input").val();
+        var key = 'results_' + taskIndex.toString();
+        ret = {}
+        ret[key] = $("#exp-input").val();
+        return ret;
     },
-    validateTask: function(taskOutput) {
+    validateTask: function(taskOutput, taskIndex) {
         /*
          * This function should return true or false depending on whether the 
          * input task is valid (e.g. fully filled out)
          *
-         * taskOutput - the object in the results array to validate
+         * taskOutput - the result to validate. If aggregate = false, 
+         *   this is the object in the results array corresponding to 
+         *   subtask taskIndex. Else, it is the results object so far.
+         * taskIndex - the index of the subtask being validated
          */
-        var matches = taskOutput.match(/\d+/g);
-        if (matches != null) {
-            return false;
-        }
-        return true;
+        var output = taskOutput['results_' + taskIndex];
+        return output.trim().length > 0;
     }
 };

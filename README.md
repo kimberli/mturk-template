@@ -17,6 +17,7 @@ Fields:
 * `meta.description` - a short overview of your task's purpose, displayed as bolded text right below the page title (string)
 * `meta.numSubtasks` - the number of subtasks your task will have (int)
 * `meta.disclaimer` - the experiment disclaimer text displayed at the bottom of the page (string)
+* `meta.aggregate` - whether inputs and outputs for the task should be divided up by subtasks, or whether inputs and outputs should be aggregated over all subtasks. If false, outputs will be stored in an array of length numSubtasks; otherwise, they will aggregated into a single object.  
 * `instructions.simple` - short instruction paragraph displayed below the task description. You can include HTML tags here! (string)
 * `instructions.steps` - an array of instruction strings, displayed as a bulleted list on the page. You can include HTML tags here! (array of strings)
 * `instructions.images` - an array of URLs for demo gifs on the instruction page. One of these will be displayed randomly on each page load. (array of strings)
