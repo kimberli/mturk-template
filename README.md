@@ -25,10 +25,11 @@ Fields:
 * `hitCreation.numTasks` - how many duplicates of the HIT you want to create (int)
 * `hitCreation.numAssignments` - how many assignments each duplicated HIT has (int)
 * `hitCreation.rewardAmount` - amount to pay per HIT (string)
-* `hitCreation.keywords` - space-separated tags (string)
+* `hitCreation.keywords` - comma-separated tags (string)
 * `hitCreation.duration` - how long you want to give each worker to complete the task once started in seconds (int)
 * `hitCreation.lifetime` - how long you want the HIT on the worker site in seconds (int)
 * `hitCreation.taskUrl` - the URL where your MTurk task lives (string)
+* `hitCreation.production` - whether you want to use MTurk's production or sandbox environment (bool)
 * `submitUrl` - the URL to submit the task to; probably "https://workersandbox.mturk.com/mturk/externalSubmit" or "https://www.mturk.com/mturk/externalSubmit" (string)
 
 
@@ -39,7 +40,7 @@ Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and
 Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task.
 
 ### Setting up the MTurk task
-Edit the `hitCreation` fields in `config.json`. Use `script/create_hit.rb` to create a HIT. Make sure to edit the HIT for submitting to live or sandbox.
+Edit the `hitCreation` fields in `config.json`. Use `script/create_hit.py` to create a HIT. Make sure to edit the config for submitting to live or sandbox.
 
 ### Screenshots
 Here's a demo of the task interface:
