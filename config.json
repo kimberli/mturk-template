@@ -3,7 +3,8 @@
         "title": "Experiment Title",
         "description": "desc",
         "numSubtasks": 10,
-        "disclaimer": "This is a disclaimer, you are participating in this experiment voluntarily"
+        "disclaimer": "This is a disclaimer, you are participating in this experiment voluntarily",
+        "aggregate": false
     },
     "instructions": {
         "simple": "this is simple instructions for <b>4</b> tasks",
@@ -26,5 +27,5 @@
         "taskUrl": "your task URL goes here",
         "production": false
     },
-    "submitUrl": "https://workersandbox.mturk.com/mturk/externalSubmit"
+    "useSandbox": true
 }
