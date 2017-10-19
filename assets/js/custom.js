@@ -25,10 +25,13 @@ var custom = {
         $("#exp-input").val(taskOutput);
         $("#exp-input").focus();
     },
-    collectData: function() {
+    collectData: function(taskInput) {
         /* 
          * This function should return the experiment data for the current task 
          * as an object
+         *
+         * taskInput - the object in the result from loadTasks corresponding to
+         *   the current task
          */
         return $("#exp-input").val();
     },
