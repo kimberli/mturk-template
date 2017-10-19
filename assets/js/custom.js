@@ -16,8 +16,8 @@ var custom = {
          * This function is called when the experiment view is unhidden 
          * or when the task index is changed
          *
-         * taskInput - the object in the result from loadTasks corresponding to
-         *   the current task
+         * taskInput - If aggregate is false, the object in the array from loadTasks
+         *   corresponding to subtask taskIndex. Else, the input object from loadTasks.
          * taskIndex - the index of the current subtask 
          * taskOutput - A partially filled out task corresponding to the subtask 
          *   taskIndex. If aggregate is set to false, this is the object in the results
@@ -40,6 +40,10 @@ var custom = {
          * in the results array for this task. 
          * If aggregate is set to true, this object will be merged with the 
          * existing results object. 
+         *
+         * taskIndex - the index of the current subtask
+         * taskInputs - If aggregate is false, the object in the array from loadTasks
+         *   corresponding to subtask taskIndex. Else, the input object from loadTasks.
          */
         var key = 'results_' + taskIndex.toString();
         ret = {}

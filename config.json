@@ -21,10 +21,11 @@
         "numTasks": 5,
         "numAssignments": 100,
         "rewardAmount": "0.00",
-        "keywords": "these are your HIT tags",
+        "keywords": "these, are, your, HIT, tags",
         "duration": 1200,
         "lifetime": 86400,
-        "taskUrl": "your task URL goes here"
+        "taskUrl": "your task URL goes here",
+        "production": false
     },
     "useSandbox": true
 }
