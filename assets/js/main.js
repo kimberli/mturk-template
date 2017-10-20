@@ -89,12 +89,18 @@ function generateMessage(cls, header) {
     });
 }
 
+function addHiddenField(form, name, value) {
+    // form is a jQuery object, name and value are strings
+    var input = $("<input type='hidden' name='" + name + "' value=''>");
+    input.val(value);
+    form.append(input);
+}
+
 function submitHIT() {
     saveTaskData();
     clearMessage();
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
-    console.log("submitting hit");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
         var item = state.taskOutputs[i];
         if (!custom.validateTask(item)) {
@@ -103,12 +109,16 @@ function submitHIT() {
             return;
         }
     }
-    for (var key in state) {
-        var val = "<input type='hidden' name='" + key + "' value='";
-        val += JSON.stringify(state[key]) + "'>";
-        form.append($(val));
+    
+    addHiddenField(form, 'assignmentId', state.assignmentId);
+    addHiddenField(form, 'workerId', state.workerId);
+    var results = {
+        'inputs': state.taskInputs,
+        'outputs': state.taskOutputs
     }
-    form.append($("<input type='hidden' name='feedback' value='" + $("#feedback-input").val() + "'>"));
+    addHiddenField(form, 'results', JSON.stringify(results));
+    addHiddenField(form, 'feedback', $("#feedback-input").val());
+
     $("#submit-form").attr("action", config.submitUrl); 
     $("#submit-form").attr("method", "POST"); 
     $("#submit-form").submit();
