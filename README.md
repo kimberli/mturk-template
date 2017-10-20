@@ -31,8 +31,6 @@ Fields:
 * `hitCreation.lifetime` - how long you want the HIT on the worker site in seconds (int)
 * `hitCreation.taskUrl` - the URL where your MTurk task lives (string)
 * `hitCreation.production` - whether you want to use MTurk's production or sandbox environment (bool)
-* `submitUrl` - the URL to submit the task to; probably "https://workersandbox.mturk.com/mturk/externalSubmit" or "https://www.mturk.com/mturk/externalSubmit" (string)
-
 
 #### `index.html`
 Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
