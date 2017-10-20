@@ -1,5 +1,3 @@
-// We recommend pasting one of the provided templates into this file to get started. 
-
 var custom = {
     loadTasks: function(numSubtasks) {
         /*
@@ -11,7 +9,9 @@ var custom = {
          * one object for each task. If config.meta.aggregate is set to true, an object that will
          * be made available to all subtasks. 
          */
-        return;
+        return $.get("").then(function() {
+            return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        });
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -28,7 +28,9 @@ var custom = {
          * 
          * returns: None
          */
-        return;
+        $(".exp-data").text("Input for task " + taskInput.toString());
+        $("#exp-input").val(taskOutput);
+        $("#exp-input").focus();
     },
     collectData: function(taskInput, taskIndex, taskOutput) {
         /* 
@@ -48,7 +50,7 @@ var custom = {
          * pairs to be merged with taskOutput.  
          * 
          */
-        return;
+        return $("#exp-input").val();
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -65,6 +67,6 @@ var custom = {
          * 
          * returns: bool indicating if validation passed
          */
-        return;
+        return taskOutput.trim().length > 0;
     }
 };

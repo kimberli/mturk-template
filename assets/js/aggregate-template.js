@@ -1,5 +1,3 @@
-// We recommend pasting one of the provided templates into this file to get started. 
-
 var custom = {
     loadTasks: function(numSubtasks) {
         /*
@@ -11,7 +9,11 @@ var custom = {
          * one object for each task. If config.meta.aggregate is set to true, an object that will
          * be made available to all subtasks. 
          */
-        return;
+        return $.get("").then(function() {
+            return {
+                number: Math.floor(Math.random()*10 + 1) // random number between 1 and 10
+            };
+        });
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -28,7 +30,24 @@ var custom = {
          * 
          * returns: None
          */
-        return;
+        switch (taskIndex) {
+            case 0: // Step 1: show the number 
+                var number = taskInput.number;
+                $(".exp-data").text("This is your number: " + number.toString());
+                $("#exp-input").hide();
+                break;
+            case 1: // Step 2: ask users to record the number
+                $(".exp-data").text("Please input the number you were shown.");
+                if (taskOutput.userResponse) {
+                    $("#exp-input").val(taskOutput.userResponse);
+                }
+                $("#exp-input").show().focus();
+                break;
+            case 2:  // Step 3: thank you page
+                $("#exp-input").hide();
+                $(".exp-data").text("Thanks for your input!");
+                break;
+        }
     },
     collectData: function(taskInput, taskIndex, taskOutput) {
         /* 
@@ -48,7 +67,18 @@ var custom = {
          * pairs to be merged with taskOutput.  
          * 
          */
-        return;
+        switch (taskIndex) {
+            case 0: // show the number
+                return {
+                    numberShown: taskInput.number
+                }
+            case 1: // record the number
+                return {
+                    userResponse: $("#exp-input").val()
+                }
+            case 2: // thanks
+                return {};
+        }
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -65,6 +95,9 @@ var custom = {
          * 
          * returns: bool indicating if validation passed
          */
-        return;
+        if (taskIndex == 1) { //validate user input 
+            return (parseInt(taskOutput.userResponse.trim()) == taskInput.number);
+        }
+        return true;
     }
 };

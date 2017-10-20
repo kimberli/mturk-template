@@ -14,10 +14,10 @@ var state = {
 /* HELPERS */
 function saveTaskData() {
     if (config.meta.aggregate) {
-        var updates = custom.collectData(state.taskIndex, getTaskInputs(state.taskIndex));
+        var updates = custom.collectData(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
         $.extend(state.taskOutputs, updates);
     } else {
-        state.taskOutputs[state.taskIndex] = custom.collectData(state.taskIndex, getTaskInputs(state.taskIndex));
+        state.taskOutputs[state.taskIndex] = custom.collectData(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
     }
 }
 
@@ -57,7 +57,7 @@ function updateTask() {
 function nextTask() {
     if (state.taskIndex < config.meta.numSubtasks - 1) {
         saveTaskData();
-        if (custom.validateTask(getTaskOutputs(state.taskIndex), state.taskIndex)) {
+        if (custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex))) {
             state.taskIndex++;
             updateTask();
             clearMessage();
@@ -119,8 +119,7 @@ function submitHIT() {
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
-        var item = getTaskOutputs(i);
-        if (!custom.validateTask(item, i)) {
+        if (!custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i))) {
             $("#submit-button").removeClass("loading");
             generateMessage("negative", "Please complete the task!");
             return;
