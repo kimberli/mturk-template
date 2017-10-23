@@ -125,11 +125,7 @@ function submitHIT() {
             return;
         }
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 9fd82f0... Added aggregate option, fixed some bugs in main.js
     addHiddenField(form, 'assignmentId', state.assignmentId);
     addHiddenField(form, 'workerId', state.workerId);
     var results = {
@@ -139,11 +135,7 @@ function submitHIT() {
     addHiddenField(form, 'results', JSON.stringify(results));
     addHiddenField(form, 'feedback', $("#feedback-input").val());
 
-<<<<<<< HEAD
-    $("#submit-form").attr("action", config.submitUrl); 
-=======
     $("#submit-form").attr("action", submitUrl); 
->>>>>>> 9fd82f0... Added aggregate option, fixed some bugs in main.js
     $("#submit-form").attr("method", "POST"); 
     $("#submit-form").submit();
     $("#submit-button").removeClass("loading");
