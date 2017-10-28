@@ -131,7 +131,7 @@ function submitHIT() {
     var results = {
         'inputs': state.taskInputs,
         'outputs': state.taskOutputs
-    }
+    };
     addHiddenField(form, 'results', JSON.stringify(results));
     addHiddenField(form, 'feedback', $("#feedback-input").val());
 
