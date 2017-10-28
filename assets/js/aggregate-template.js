@@ -1,5 +1,3 @@
-// We recommend pasting one of the provided templates into this file to get started. 
-
 var custom = {
     loadTasks: function(numSubtasks) {
         /*
@@ -10,7 +8,11 @@ var custom = {
          * returns: if config.meta.aggregate is set to false, an array of objects with length config.meta.numTasks,
          * one object for each task; else, an object that will be made available to all subtasks
          */
-        return;
+        return $.get("").then(function() {
+            return {
+                number: Math.floor(Math.random()*10 + 1) // random number between 1 and 10
+            };
+        });
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -19,15 +21,32 @@ var custom = {
          *
          * taskInput - if config.meta.aggregate is false, the object in the array from loadTasks
          *   corresponding to subtask taskIndex; else, the input object from loadTasks
-         * taskIndex - the number of the current subtask
+         * taskIndex - the number of the current subtask 
          * taskOutput - a partially filled out task corresponding to the subtask taskIndex
-         *   If config.meta.aggregate is set to false, this is the results object for the current
+         *   If config.meta.aggregate is set to false, this is the results object for the current 
          *   subtask. If config.meta.aggregate is set to true, this is the results object for the
          *   entire task. 
          * 
          * returns: None
          */
-        return;
+        switch (taskIndex) {
+            case 0: // Step 1: show the number 
+                var number = taskInput.number;
+                $(".exp-data").text("This is your number: " + number.toString());
+                $("#exp-input").hide();
+                break;
+            case 1: // Step 2: ask users to record the number
+                $(".exp-data").text("Please input the number you were shown.");
+                if (taskOutput.userResponse) {
+                    $("#exp-input").val(taskOutput.userResponse);
+                }
+                $("#exp-input").show().focus();
+                break;
+            case 2:  // Step 3: thank you page
+                $("#exp-input").hide();
+                $(".exp-data").text("Thanks for your input!");
+                break;
+        }
     },
     collectData: function(taskInput, taskIndex, taskOutput) {
         /* 
@@ -47,7 +66,18 @@ var custom = {
          *   config.meta.aggregate is true, an object with key-value pairs to be merged with the
          *   taskOutput object.
          */
-        return;
+        switch (taskIndex) {
+            case 0: // show the number
+                return {
+                    numberShown: taskInput.number
+                };
+            case 1: // record the number
+                return {
+                    userResponse: $("#exp-input").val()
+                };
+            case 2: // thanks
+                return {};
+        }
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -64,6 +94,9 @@ var custom = {
          * 
          * returns: bool indicating if validation passed
          */
-        return;
+        if (taskIndex == 1) { //validate user input 
+            return (parseInt(taskOutput.userResponse.trim()) == taskInput.number);
+        }
+        return true;
     }
 };

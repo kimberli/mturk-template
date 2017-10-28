@@ -2,11 +2,12 @@
     "meta": {
         "title": "Experiment Title",
         "description": "desc",
-        "numSubtasks": 10,
-        "disclaimer": "This is a disclaimer, you are participating in this experiment voluntarily"
+        "numSubtasks": 3,
+        "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
+        "aggregate": false
     },
     "instructions": {
-        "simple": "this is simple instructions for <b>4</b> tasks",
+        "simple": "These are simple instructions for <b>4</b> tasks",
         "steps": [
             "instruction1",
             "instruction2",
@@ -25,6 +26,5 @@
         "lifetime": 86400,
         "taskUrl": "your task URL goes here",
         "production": false
-    },
-    "submitUrl": "https://workersandbox.mturk.com/mturk/externalSubmit"
+    }
 }

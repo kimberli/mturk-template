@@ -1,5 +1,3 @@
-// We recommend pasting one of the provided templates into this file to get started. 
-
 var custom = {
     loadTasks: function(numSubtasks) {
         /*
@@ -10,7 +8,9 @@ var custom = {
          * returns: if config.meta.aggregate is set to false, an array of objects with length config.meta.numTasks,
          * one object for each task; else, an object that will be made available to all subtasks
          */
-        return;
+        return $.get("").then(function() {
+            return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        });
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -19,15 +19,17 @@ var custom = {
          *
          * taskInput - if config.meta.aggregate is false, the object in the array from loadTasks
          *   corresponding to subtask taskIndex; else, the input object from loadTasks
-         * taskIndex - the number of the current subtask
+         * taskIndex - the number of the current subtask 
          * taskOutput - a partially filled out task corresponding to the subtask taskIndex
-         *   If config.meta.aggregate is set to false, this is the results object for the current
+         *   If config.meta.aggregate is set to false, this is the results object for the current 
          *   subtask. If config.meta.aggregate is set to true, this is the results object for the
          *   entire task. 
          * 
          * returns: None
          */
-        return;
+        $(".exp-data").text("Input for task " + taskInput.toString());
+        $("#exp-input").val(taskOutput);
+        $("#exp-input").focus();
     },
     collectData: function(taskInput, taskIndex, taskOutput) {
         /* 
@@ -47,7 +49,7 @@ var custom = {
          *   config.meta.aggregate is true, an object with key-value pairs to be merged with the
          *   taskOutput object.
          */
-        return;
+        return $("#exp-input").val();
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -64,6 +66,6 @@ var custom = {
          * 
          * returns: bool indicating if validation passed
          */
-        return;
+        return taskOutput.trim().length > 0;
     }
 };
