@@ -57,13 +57,14 @@ function updateTask() {
 function nextTask() {
     if (state.taskIndex < config.meta.numSubtasks - 1) {
         saveTaskData();
-        if (custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex))) {
+        var err = custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+        if (err) {
+            generateMessage("negative", err);
+        } else {
             state.taskIndex++;
             updateTask();
             clearMessage();
             console.log("Current collected data", state.taskOutputs);
-        } else {
-            generateMessage("negative", "Please complete the current task!");
         }
     }
 }
@@ -119,9 +120,10 @@ function submitHIT() {
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
-        if (!custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i))) {
+        var err = custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i));
+        if (err) {
             $("#submit-button").removeClass("loading");
-            generateMessage("negative", "Please complete the task!");
+            generateMessage("negative", err);
             return;
         }
     }

@@ -51,8 +51,9 @@ var custom = {
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
-         * This function should return true or false depending on whether the 
-         * data stored in taskOutput is valid (e.g. fully filled out)
+         * This function should return an error message if the 
+         * data stored in taskOutput is not valid (e.g. fully filled out), and 
+         * a falsey value otherwise
          *
          * taskInput - if config.meta.aggregate is false, the object in the array from loadTasks
          *   corresponding to subtask taskIndex; else, the input object from loadTasks
@@ -62,7 +63,7 @@ var custom = {
          *   subtask. If config.meta.aggregate is set to true, this is the results object for the
          *   entire task
          * 
-         * returns: bool indicating if validation passed
+         * returns: string indicating error message or falsey value
          */
         return;
     }
